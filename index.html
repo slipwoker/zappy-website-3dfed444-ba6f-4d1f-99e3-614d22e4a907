@@ -238,10 +238,268 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
     <!-- Cookie Consent -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+
+<style data-zappy-section-v2-css="true">
+/* V2 Regenerated Section CSS */
+.home-Hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 24px 80px 24px;
+  overflow: hidden;
+  background-color: #0B0D16;
+}
+
+.home-Hero-section__bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.home-Hero-section__scrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(11,13,22,0.0) 0%, rgba(11,13,22,0.55) 70%, rgba(11,13,22,0.85) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home-Hero-section__scan-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.08) 0px,
+    rgba(0,0,0,0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.home-Hero-section__content-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.home-Hero-section__card {
+  background: rgba(11,13,22,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 3px solid rgba(0,182,255,0.35);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 580px;
+  width: 100%;
+  box-shadow: 0 0 40px rgba(0,182,255,0.25),
+              0 18px 40px rgba(0,0,0,0.5),
+              inset 0 1px 0 rgba(255,255,255,0.08);
+  position: relative;
+  color: var(--text-light);
+}
+
+.home-Hero-section__card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(255,45,170,0.4) 0%, rgba(0,212,255,0.4) 50%, rgba(124,58,237,0.4) 100%);
+  border-radius: 16px;
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(8px);
+}
+
+.home-Hero-section__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,212,255,0.15);
+  border: 2px solid rgba(0,212,255,0.5);
+  border-radius: 999px;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+}
+
+.home-Hero-section__status-icon {
+  color: var(--secondary);
+  font-size: 12px;
+  animation: home-Hero-pulse 2s ease-in-out infinite;
+}
+
+@keyframes home-Hero-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.home-Hero-section__status-badge h3 {
+  font-family: 'Pixelify Sans', 'Press Start 2P', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.home-Hero-section__card h1 {
+  font-family: 'Pixelify Sans', 'Press Start 2P', system-ui, sans-serif;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.55), 0 10px 18px rgba(0,0,0,0.35);
+  margin: 0 0 24px 0;
+}
+
+.home-Hero-section__card p {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.35);
+  margin: 0 0 32px 0;
+}
+
+.home-Hero-section__cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.home-Hero-section__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-family: 'Pixelify Sans', 'Press Start 2P', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.home-Hero-section__btn:active {
+  transform: translateY(4px);
+}
+
+.home-Hero-section__btn--primary {
+  background: linear-gradient(180deg, #FF4DB1 0%, #D70075 100%);
+  color: #FFFFFF;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.35), 0 14px 26px rgba(0,0,0,0.35);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.35);
+}
+
+.home-Hero-section__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 rgba(0,0,0,0.35), 0 18px 32px rgba(0,0,0,0.4);
+}
+
+.home-Hero-section__btn--primary:active {
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35), 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.home-Hero-section__btn--secondary {
+  background: linear-gradient(180deg, #25CCFF 0%, #0079D6 100%);
+  color: #FFFFFF;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.35), 0 14px 26px rgba(0,0,0,0.35);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.35);
+}
+
+.home-Hero-section__btn--secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 rgba(0,0,0,0.35), 0 18px 32px rgba(0,0,0,0.4);
+}
+
+.home-Hero-section__btn--secondary:active {
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35), 0 8px 16px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .home-Hero-section {
+    padding: 100px 16px 60px 16px;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .home-Hero-section__content-container {
+    justify-content: center;
+  }
+  
+  .home-Hero-section__card {
+    padding: 32px 24px;
+    max-width: 100%;
+  }
+  
+  .home-Hero-section__card h1 {
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  
+  .home-Hero-section__card p {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  
+  .home-Hero-section__status-badge {
+    margin-bottom: 20px;
+  }
+  
+  .home-Hero-section__status-badge h3 {
+    font-size: 11px;
+  }
+  
+  .home-Hero-section__cta-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .home-Hero-section__btn {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 13px;
+  }
+}
+</style>
     <link rel="stylesheet" href="/styles.css">
 
     <style id="zappy-dropdown-submenu-styles">
@@ -300,16 +558,16 @@
 
   <nav class="navbar">
   <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <svg class="hamburger-icon" width="24" height="24" viewbox="0 0 24 24" fill="none">
       <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
-    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+    <svg class="close-icon" width="24" height="24" viewbox="0 0 24 24" fill="none" style="display:none;">
       <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
   </button>
   
   <button class="phone-header-btn" aria-label="Call">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
   </button>
@@ -317,7 +575,7 @@
   <div class="nav-container">
     <div class="nav-brand">
       <a href="/" class="logo-link">
-        <img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo" />
+        <img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo">
       </a>
     </div>
     
@@ -330,23 +588,29 @@
 </nav>
   
   <main>
-    <section class="home-hero-section" data-layout-spec="Home-Hero" data-hero-type="fullscreen-scrim">
-  <div class="home-hero-bg-wrapper">
-    <img data-hero-bg="true" data-placeholder="home-hero-bg" data-context="Dark moody retro arcade room scene with glowing CRT monitors displaying pixel art games, neon purple and cyan edge lighting, vintage gaming consoles on shelves, atmospheric fog, gritty but clean aesthetic, early 2000s indie game dev workspace vibe, cinematic lighting with strong contrast" class="home-hero-bg-image" width="1920" height="1080" src="/assets/site-home-hero-bg.webp" alt="Retro arcade gaming setup with glowing screens">
-    <div class="home-hero-scrim"></div>
-  </div>
+    <section class="home-Hero-section" data-layout-spec="Home-Hero" data-zappy-section="true" data-hero-type="fullscreen-scrim">
+  <div class="home-Hero-section__bg-wrapper" style="background-image: url('assets/site-home-hero-bg.webp');  background-size: cover; background-position: center;"></div>
+  <div class="home-Hero-section__scrim"></div>
   
-  <div class="home-hero-content-wrapper">
-    <div class="home-hero-card">
-      <h3 class="home-hero-status">New Build Drops Regularly</h3>
-      <h1 class="home-hero-headline">Indie Games,<br>Built Like It's 2003</h1>
-      <p class="home-hero-description">Embracing the scrappy, creative spirit of early-internet game development with retro arcade aesthetics and nostalgic pixel-perfect passion.</p>
-      <div class="home-hero-cta-row">
-        <a href="/games" class="home-hero-btn home-hero-btn-primary">Explore Games</a>
-        <a href="/contact" class="home-hero-btn home-hero-btn-secondary">Get in Touch</a>
+  <div class="home-Hero-section__content-container">
+    <div class="home-Hero-section__card">
+      <div class="home-Hero-section__status-badge">
+        <span class="home-Hero-section__status-icon">●</span>
+        <h3>New Build Drops Regularly</h3>
+      </div>
+      
+      <h1>Indie Games,<br>Built Like It's 2003</h1>
+      
+      <p>Embracing the scrappy, creative spirit of early-internet game development with retro arcade aesthetics and nostalgic pixel-perfect passion.</p>
+      
+      <div class="home-Hero-section__cta-row">
+        <a href="/games" class="home-Hero-section__btn home-Hero-section__btn--primary">Explore Games</a>
+        <a href="/contact" class="home-Hero-section__btn home-Hero-section__btn--secondary">Get in Touch</a>
       </div>
     </div>
   </div>
+  
+  <div class="home-Hero-section__scan-lines" aria-hidden="true"></div>
 </section>
 
 <section class="home-features-section" data-layout-spec="Home-features">
@@ -359,7 +623,7 @@
     <div class="home-features-grid">
       <article class="home-features-card">
         <div class="home-features-card-accent"></div>
-        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="8" y="8" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"></rect>
           <rect x="14" y="14" width="6" height="6" fill="currentColor"></rect>
           <rect x="28" y="14" width="6" height="6" fill="currentColor"></rect>
@@ -372,7 +636,7 @@
 
       <article class="home-features-card">
         <div class="home-features-card-accent"></div>
-        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M24 6 L28 14 L38 14 L30 22 L34 32 L24 26 L14 32 L18 22 L10 14 L20 14 Z" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="miter"></path>
           <circle cx="24" cy="24" r="3" fill="currentColor"></circle>
           <path d="M6 42 L12 36 M36 42 L42 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
@@ -383,7 +647,7 @@
 
       <article class="home-features-card">
         <div class="home-features-card-accent"></div>
-        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5" fill="none"></circle>
           <path d="M24 12 L24 24 L32 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
           <path d="M8 24 L4 24 M44 24 L40 24 M24 8 L24 4 M24 44 L24 40" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
@@ -396,18 +660,18 @@
   </div>
 
   <div class="home-features-divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 60" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="home-features-glow">
-          <feGaussianBlur stdDeviation="2" result="coloredBlur"></feGaussianBlur>
+          <feGaussianBlur stddeviation="2" result="coloredBlur"></feGaussianBlur>
           <feMerge>
             <feMergeNode in="coloredBlur"></feMergeNode>
             <feMergeNode in="SourceGraphic"></feMergeNode>
           </feMerge>
         </filter>
       </defs>
-      <path d="M0,60 L0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48 L1200,60 Z" fill="var(--bg-light)"></path>
-      <path d="M0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48" stroke="var(--secondary)" stroke-width="1.5" fill="var(--bg-light)" filter="url(#home-features-glow)"></path>
+      <path d="M0,60 L0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48 L1200,60 Z" fill="var(--bg-dark)"></path>
+      <path d="M0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48" stroke="var(--secondary)" stroke-width="1.5" fill="var(--bg-dark)" filter="url(#home-features-glow)"></path>
     </svg>
   </div>
 </section>
@@ -475,7 +739,7 @@
   </div>
 
   <div class="home-portfolio-divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="home-portfolio-crt-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" style="stop-color:#0B0F1A;stop-opacity:1"></stop>
@@ -514,8 +778,8 @@
   </div>
   
   <div class="testimonials-divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,80 L0,45 L20,42 L40,48 L60,44 L80,50 L100,46 L120,52 L140,48 L160,54 L180,50 L200,56 L220,52 L240,58 L260,54 L280,60 L300,56 L320,62 L340,58 L360,64 L380,60 L400,66 L420,62 L440,68 L460,64 L480,70 L500,66 L520,72 L540,68 L560,74 L580,70 L600,76 L620,72 L640,78 L660,74 L680,80 L700,76 L720,78 L740,74 L760,80 L780,76 L800,78 L820,74 L840,80 L860,76 L880,78 L900,74 L920,80 L940,76 L960,78 L980,74 L1000,80 L1020,76 L1040,78 L1060,74 L1080,80 L1100,76 L1120,78 L1140,74 L1160,80 L1180,76 L1200,78 L1200,80 Z" fill="var(--bg-light)"></path>
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,45 L20,42 L40,48 L60,44 L80,50 L100,46 L120,52 L140,48 L160,54 L180,50 L200,56 L220,52 L240,58 L260,54 L280,60 L300,56 L320,62 L340,58 L360,64 L380,60 L400,66 L420,62 L440,68 L460,64 L480,70 L500,66 L520,72 L540,68 L560,74 L580,70 L600,76 L620,72 L640,78 L660,74 L680,80 L700,76 L720,78 L740,74 L760,80 L780,76 L800,78 L820,74 L840,80 L860,76 L880,78 L900,74 L920,80 L940,76 L960,78 L980,74 L1000,80 L1020,76 L1040,78 L1060,74 L1080,80 L1100,76 L1120,78 L1140,74 L1160,80 L1180,76 L1200,78 L1200,80 Z" fill="var(--bg-dark)"></path>
     </svg>
   </div>
 </section>
@@ -531,7 +795,7 @@
 </section>
   </main>
   
-  <footer class="site-footer"><div class="footer-container"><div class="footer-top"><div class="footer-column footer-about"><img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo" /><p class="footer-tagline">Level up your gaming experience with SJohnson.</p></div><div class="footer-column footer-links"><h3 class="footer-heading">Quick Links</h3><ul class="footer-nav"><li><a href="/games">Games</a></li><li><a href="/devlog">Devlog</a></li><li><a href="/contact">Contact</a></li></ul></div><div class="footer-column footer-contact"><h3 class="footer-heading">Contact Us</h3><ul class="footer-contact-list"><li><i class="fas fa-envelope"></i><a href="mailto:[business_email]">[business_email]</a></li><li><i class="fas fa-phone"></i><a href="tel:[business_phone]">[business_phone]</a></li><li><a href="/"><i class="fas fa-map-marker-alt"></i><span>[business_address]</span></a></li></ul></div><div class="footer-column footer-social"><h3 class="footer-heading">Follow Us</h3><div class="social-links"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div></div><div class="footer-bottom"><div class="footer-copyright"><p>© 2026 SJohnson. All rights reserved.</p></div><div class="footer-legal"><a href="/privacy">Privacy Policy</a><span class="separator">|</span><a href="/terms">Terms &amp; Conditions</a><span class="separator">|</span><a href="/accessibility">Accessibility</a><span class="separator">|</span><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></div></footer>
+  <footer class="site-footer"><div class="footer-container"><div class="footer-top"><div class="footer-column footer-about"><img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo"><p class="footer-tagline">Level up your gaming experience with SJohnson.</p></div><div class="footer-column footer-links"><h3 class="footer-heading">Quick Links</h3><ul class="footer-nav"><li><a href="/games">Games</a></li><li><a href="/devlog">Devlog</a></li><li><a href="/contact">Contact</a></li></ul></div><div class="footer-column footer-contact"><h3 class="footer-heading">Contact Us</h3><ul class="footer-contact-list"><li><i class="fas fa-envelope"></i><a href="mailto:[business_email]">[business_email]</a></li><li><i class="fas fa-phone"></i><a href="tel:[business_phone]">[business_phone]</a></li><li><a href="/"><i class="fas fa-map-marker-alt"></i><span>[business_address]</span></a></li></ul></div><div class="footer-column footer-social"><h3 class="footer-heading">Follow Us</h3><div class="social-links"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div></div><div class="footer-bottom"><div class="footer-copyright"><p>© 2026 SJohnson. All rights reserved.</p></div><div class="footer-legal"><a href="/privacy">Privacy Policy</a><span class="separator">|</span><a href="/terms">Terms &amp; Conditions</a><span class="separator">|</span><a href="/accessibility">Accessibility</a><span class="separator">|</span><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></div></footer>
   
   <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
     <i class="fab fa-whatsapp"></i>
