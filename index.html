@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Indie Video Game Developer with Retro Flair — SJohnson</title>
+    <meta name="description" content="SJohnson creates arcade-inspired indie games with early-2000s internet nostalgia. Experience bold visuals, old-school gaming culture, and chaotic fun.">
+    <meta name="keywords" content="video game developer, indie game developer, retro arcade games, old-school gaming, SJohnson">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '3dfed444-ba6f-4d1f-99e3-614d22e4a907',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="Indie Video Game Developer with Retro Flair — SJohnson">
+  <meta property="og:description" content="SJohnson creates arcade-inspired indie games with early-2000s internet nostalgia. Experience bold visuals, old-school gaming culture, and chaotic fun.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Indie Video Game Developer with Retro Flair — SJohnson">
+  <meta name="twitter:description" content="SJohnson creates arcade-inspired indie games with early-2000s internet nostalgia. Experience bold visuals, old-school gaming culture, and chaotic fun.">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      #mic-access-tool-general-button, .mic-access-tool-general-button,
+      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+      }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/games">Games</a></li><li><a href="/devlog">Devlog</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">Contact</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="home-hero-section" data-layout-spec="Home-Hero" data-hero-type="fullscreen-scrim">
+  <div class="home-hero-bg-wrapper">
+    <img data-hero-bg="true" data-placeholder="home-hero-bg" data-context="Dark moody retro arcade room scene with glowing CRT monitors displaying pixel art games, neon purple and cyan edge lighting, vintage gaming consoles on shelves, atmospheric fog, gritty but clean aesthetic, early 2000s indie game dev workspace vibe, cinematic lighting with strong contrast" class="home-hero-bg-image" width="1920" height="1080" src="/assets/site-home-hero-bg.webp" alt="Retro arcade gaming setup with glowing screens">
+    <div class="home-hero-scrim"></div>
+  </div>
+  
+  <div class="home-hero-content-wrapper">
+    <div class="home-hero-card">
+      <h3 class="home-hero-status">New Build Drops Regularly</h3>
+      <h1 class="home-hero-headline">Indie Games,<br>Built Like It's 2003</h1>
+      <p class="home-hero-description">Embracing the scrappy, creative spirit of early-internet game development with retro arcade aesthetics and nostalgic pixel-perfect passion.</p>
+      <div class="home-hero-cta-row">
+        <a href="/games" class="home-hero-btn home-hero-btn-primary">Explore Games</a>
+        <a href="/contact" class="home-hero-btn home-hero-btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-features-section" data-layout-spec="Home-features">
+  <div class="home-features-container">
+    <div class="home-features-intro">
+      <h2>Retro-first, modern-polished</h2>
+      <p>We blend nostalgic chaos with clean UX—arcade-era boldness meets today's playability standards. Every pixel screams early-2000s indie spirit, while the controls feel buttery smooth and the loops are addictive. It's the scrappy creativity you remember, refined for modern platforms and audiences.</p>
+    </div>
+
+    <div class="home-features-grid">
+      <article class="home-features-card">
+        <div class="home-features-card-accent"></div>
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"></rect>
+          <rect x="14" y="14" width="6" height="6" fill="currentColor"></rect>
+          <rect x="28" y="14" width="6" height="6" fill="currentColor"></rect>
+          <rect x="14" y="28" width="20" height="6" fill="currentColor"></rect>
+          <path d="M4 4 L8 8 M40 4 L44 8 M4 44 L8 40 M40 44 L44 40" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
+        </svg>
+        <h3>Arcade-grade Visuals</h3>
+        <p>Bold geometric shapes, high-contrast neon accents, and a UI that pops off the screen. Every frame is designed to grab attention and hold it—no subtlety, just pure visual energy that channels the golden age of arcade cabinets.</p>
+      </article>
+
+      <article class="home-features-card">
+        <div class="home-features-card-accent"></div>
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 6 L28 14 L38 14 L30 22 L34 32 L24 26 L14 32 L18 22 L10 14 L20 14 Z" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="miter"></path>
+          <circle cx="24" cy="24" r="3" fill="currentColor"></circle>
+          <path d="M6 42 L12 36 M36 42 L42 36" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
+        </svg>
+        <h3>Scrappy Indie Spirit</h3>
+        <p>Fast iteration cycles, weird experimental mechanics, and community-driven builds. We ship early, break things, and listen to players. This is game making software that embraces the chaos—no corporate polish, just raw creative energy and rapid evolution.</p>
+      </article>
+
+      <article class="home-features-card">
+        <div class="home-features-card-accent"></div>
+        <svg data-element-type="icon" data-icon-type="svg" class="home-features-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5" fill="none"></circle>
+          <path d="M24 12 L24 24 L32 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
+          <path d="M8 24 L4 24 M44 24 L40 24 M24 8 L24 4 M24 44 L24 40" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
+          <circle cx="24" cy="24" r="2" fill="currentColor"></circle>
+        </svg>
+        <h3>Playable, Shareable, Memorable</h3>
+        <p>Tight gameplay loops that hook you in seconds, quick downloads for instant gratification, and streamer-friendly moments that create viral clips. Built by a video game developer who knows what makes games stick—and what makes them spread.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="home-features-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="home-features-glow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"></feGaussianBlur>
+          <feMerge>
+            <feMergeNode in="coloredBlur"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+      </defs>
+      <path d="M0,60 L0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48 L1200,60 Z" fill="var(--bg-light)"></path>
+      <path d="M0,40 L60,40 L60,32 L120,32 L120,24 L180,24 L180,16 L240,16 L240,24 L300,24 L300,32 L360,32 L360,40 L420,40 L420,32 L480,32 L480,24 L540,24 L540,16 L600,16 L600,24 L660,24 L660,32 L720,32 L720,40 L780,40 L780,32 L840,32 L840,24 L900,24 L900,16 L960,16 L960,24 L1020,24 L1020,32 L1080,32 L1080,40 L1140,40 L1140,48 L1200,48" stroke="var(--secondary)" stroke-width="1.5" fill="var(--bg-light)" filter="url(#home-features-glow)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="home-portfolio-section" data-layout-spec="Home-portfolio">
+  <div class="home-portfolio-container">
+    <div class="home-portfolio-intro">
+      <h2>Current Projects</h2>
+      <p>These are works-in-progress—demos, prototypes, and builds that capture the spirit of early indie dev culture. Each project is a love letter to the arcade era, reimagined with modern tools and a healthy dose of nostalgia.</p>
+    </div>
+
+    <div class="home-portfolio-grid">
+      <article class="home-portfolio-card">
+        <div class="home-portfolio-card-image-wrapper">
+          <img data-placeholder="home-portfolio-image-1" data-context="Neon Quarter game key art: a cyberpunk alleyway bathed in electric pink and cyan neon signs, pixel art style with high contrast, arcade game poster aesthetic, retro gaming vibe, 8-bit inspired but detailed" width="600" height="400" src="/assets/site-home-portfolio-image-1.webp" alt="Neon Quarter game key art showing cyberpunk alleyway">
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-tl"></div>
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-br"></div>
+        </div>
+        <div class="home-portfolio-card-content">
+          <h3>Neon Quarter</h3>
+          <p>Navigate a rain-soaked cyberpunk district where every choice rewrites your rep. Fast-paced decision-making meets retro point-and-click exploration.</p>
+          <a href="/contact" class="home-portfolio-card-link">Contact for demo/build access <i class="fas fa-arrow-right" data-element-type="icon" data-icon-type="fontawesome"></i></a>
+        </div>
+      </article>
+
+      <article class="home-portfolio-card">
+        <div class="home-portfolio-card-image-wrapper">
+          <img data-placeholder="home-portfolio-image-2" data-context="Dungeon Diskette game key art: a floppy disk transforming into a fantasy dungeon entrance, pixel art style, purple and magenta color scheme, arcade game poster aesthetic, retro computing meets fantasy RPG" width="600" height="400" src="/assets/site-home-portfolio-image-2.webp" alt="Dungeon Diskette game key art with floppy disk dungeon">
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-tl"></div>
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-br"></div>
+        </div>
+        <div class="home-portfolio-card-content">
+          <h3>Dungeon Diskette</h3>
+          <p>A roguelike where each run is saved to a virtual floppy—lose the disk, lose the hero. Permadeath with a nostalgic twist and procedurally generated dungeons.</p>
+          <a href="/contact" class="home-portfolio-card-link">Contact for demo/build access <i class="fas fa-arrow-right" data-element-type="icon" data-icon-type="fontawesome"></i></a>
+        </div>
+      </article>
+
+      <article class="home-portfolio-card">
+        <div class="home-portfolio-card-image-wrapper">
+          <img data-placeholder="home-portfolio-image-3" data-context="CRT Drift game key art: a retro race car drifting with scanline CRT screen effects, vibrant cyan and hot pink trails, arcade racing game poster, 80s aesthetic with pixel art style" width="600" height="400" src="/assets/site-home-portfolio-image-3.webp" alt="CRT Drift game key art with racing car and CRT effects">
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-tl"></div>
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-br"></div>
+        </div>
+        <div class="home-portfolio-card-content">
+          <h3>CRT Drift</h3>
+          <p>An arcade racer filtered through a cathode-ray lens—scanlines, bloom, and all. Master the drift physics while the screen flickers like your childhood TV.</p>
+          <a href="/contact" class="home-portfolio-card-link">Contact for demo/build access <i class="fas fa-arrow-right" data-element-type="icon" data-icon-type="fontawesome"></i></a>
+        </div>
+      </article>
+
+      <article class="home-portfolio-card">
+        <div class="home-portfolio-card-image-wrapper">
+          <img data-placeholder="home-portfolio-image-4" data-context="Arcade Relic game key art: an ancient arcade cabinet glowing with mysterious power, pixel art style, purple and cyan mystical energy, treasure hunter meets retro gaming, adventure game poster aesthetic" width="600" height="400" src="/assets/site-home-portfolio-image-4.webp" alt="Arcade Relic game key art with mystical arcade cabinet">
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-tl"></div>
+          <div class="home-portfolio-card-corner home-portfolio-card-corner-br"></div>
+        </div>
+        <div class="home-portfolio-card-content">
+          <h3>Arcade Relic</h3>
+          <p>Uncover forgotten arcade cabinets that hold more than high scores—each machine is a portal to a mini-game dimension. Puzzle-platforming meets treasure hunting.</p>
+          <a href="/contact" class="home-portfolio-card-link">Contact for demo/build access <i class="fas fa-arrow-right" data-element-type="icon" data-icon-type="fontawesome"></i></a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="home-portfolio-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="home-portfolio-crt-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#0B0F1A;stop-opacity:1"></stop>
+          <stop offset="50%" style="stop-color:#1A1F2E;stop-opacity:0.6"></stop>
+          <stop offset="100%" style="stop-color:#F7F5F2;stop-"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,80 L0,0 Q150,8 300,0 T600,0 Q750,8 900,0 T1200,0 L1200,80 Z" fill="var(--bg-light)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="home-testimonials-section" data-layout-spec="Home-testimonials">
+  <div class="testimonials-container">
+    <div class="testimonials-intro">
+      <h2>Players feel the nostalgia</h2>
+      <p>Our playtesters, streamers, and game jam judges have spoken—SJohnson games capture that authentic early-2000s indie spirit while delivering modern polish and fun.</p>
+    </div>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"The vibe is spot-on. It's like booting up a flash game from 2003, but way more polished. Love the pixel art and the chaotic energy."</p>
+        <h3>— Playtester</h3>
+      </div>
+      
+      <div class="testimonial-card">
+        <p>"Controls are tight and responsive. The arcade feel is real—I kept coming back for 'just one more run.' Seriously addictive gameplay."</p>
+        <h3>— Indie streamer</h3>
+      </div>
+      
+      <div class="testimonial-card">
+        <p>"The humor and aesthetic are chef's kiss. This is exactly what indie game development should be—scrappy, creative, and unapologetically fun."</p>
+        <h3>— Game jam judge</h3>
+      </div>
+    </div>
+  </div>
+  
+  <div class="testimonials-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,45 L20,42 L40,48 L60,44 L80,50 L100,46 L120,52 L140,48 L160,54 L180,50 L200,56 L220,52 L240,58 L260,54 L280,60 L300,56 L320,62 L340,58 L360,64 L380,60 L400,66 L420,62 L440,68 L460,64 L480,70 L500,66 L520,72 L540,68 L560,74 L580,70 L600,76 L620,72 L640,78 L660,74 L680,80 L700,76 L720,78 L740,74 L760,80 L780,76 L800,78 L820,74 L840,80 L860,76 L880,78 L900,74 L920,80 L940,76 L960,78 L980,74 L1000,80 L1020,76 L1040,78 L1060,74 L1080,80 L1100,76 L1120,78 L1140,74 L1160,80 L1180,76 L1200,78 L1200,80 Z" fill="var(--bg-light)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="home-cta-section" data-layout-spec="Home-cta">
+  <div class="home-cta-container">
+    <div class="home-cta-panel">
+      <h2>Want a build? Want to collaborate?</h2>
+      <p>Whether you're press looking for a demo, a playtester eager to break my code, a musician with a killer chiptune, or a platform seeking indie gems—let's talk. SJohnson games are built on collaboration and community spirit.</p>
+      <a href="/contact" class="btn-primary">Contact SJohnson</a>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer"><div class="footer-container"><div class="footer-top"><div class="footer-column footer-about"><img src="/assets/sjohnson-gaming-logo.webp" alt="SJohnson" class="logo" /><p class="footer-tagline">Level up your gaming experience with SJohnson.</p></div><div class="footer-column footer-links"><h3 class="footer-heading">Quick Links</h3><ul class="footer-nav"><li><a href="/games">Games</a></li><li><a href="/devlog">Devlog</a></li><li><a href="/contact">Contact</a></li></ul></div><div class="footer-column footer-contact"><h3 class="footer-heading">Contact Us</h3><ul class="footer-contact-list"><li><i class="fas fa-envelope"></i><a href="mailto:[business_email]">[business_email]</a></li><li><i class="fas fa-phone"></i><a href="tel:[business_phone]">[business_phone]</a></li><li><a href="/"><i class="fas fa-map-marker-alt"></i><span>[business_address]</span></a></li></ul></div><div class="footer-column footer-social"><h3 class="footer-heading">Follow Us</h3><div class="social-links"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div></div><div class="footer-bottom"><div class="footer-copyright"><p>© 2026 SJohnson. All rights reserved.</p></div><div class="footer-legal"><a href="/privacy">Privacy Policy</a><span class="separator">|</span><a href="/terms">Terms &amp; Conditions</a><span class="separator">|</span><a href="/accessibility">Accessibility</a><span class="separator">|</span><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></div></footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
